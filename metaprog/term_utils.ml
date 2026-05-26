@@ -19,7 +19,7 @@ let pretype (t : Constrexpr.constr_expr) : EConstr.t m =
  fun env sigma ->
   let t = Constrintern.intern_constr env sigma t in
   let t, ustate = Pretyping.understand env sigma t in
-  (Evd.merge_universe_context sigma ustate, t)
+  (Evd.merge_ustate sigma ustate, t)
 
 let typecheck ?(solve_tc = false) (t : EConstr.t) (expected_ty : EConstr.t option) :
     EConstr.types m =
@@ -289,7 +289,7 @@ let case (scrutinee : EConstr.t)
   let* sigma = get_sigma in
   ret
   @@ Inductiveops.simple_make_case_or_project env sigma
-       (Inductiveops.make_case_info env ind Constr.RegularStyle)
+       (Inductiveops.make_case_info env ind Constr.MatchStyle)
        (return, EConstr.ERelevance.relevant)
        Constr.NoInvert scrutinee (Array.of_list branch_list)
 

@@ -125,7 +125,7 @@ let with_local_decl (decl : EConstr.rel_declaration) (k : Names.Id.t -> 'a m) : 
           , EConstr.to_constr ~abort_on_undefined_evars:false sigma def
           , EConstr.to_constr ~abort_on_undefined_evars:false sigma ty )
   in
-  with_env' (Environ.push_named named_decl) @@ k id
+  with_env' (Environ.push_named ProofVar named_decl) @@ k id
 
 let with_local_ctx (ctx : EConstr.rel_context) (k : Names.Id.t list -> 'a m) : 'a m =
   (* We process declarations from outermost to innermost. *)
